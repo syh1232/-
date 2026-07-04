@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>沈奕涵 | 个人作品集</title>
+    <style>
+      :root {
+        color: #eef6ff;
+        background: #05070b;
+        font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 104px; }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 12% 8%, rgba(0, 197, 255, 0.14), transparent 30rem),
+          radial-gradient(circle at 92% 28%, rgba(156, 111, 255, 0.13), transparent 34rem),
+          #05070b;
+      }
+      .openingCurtain {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, #020203, #190005 48%, #050506),
+          radial-gradient(circle at 18% 50%, rgba(198,0,20,0.34), transparent 24rem);
+      }
+      .siteMagicBackground {
+        position: fixed;
+        inset: 0;
+        z-index: -4;
+        pointer-events: none;
+        opacity: 0.58;
+        overflow: hidden;
+        mix-blend-mode: screen;
+      }
+      .siteMagicBackground::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(92vw, 1180px);
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%) rotate(-18deg);
+        border-radius: 50%;
+        background:
+          repeating-radial-gradient(circle, transparent 0 56px, rgba(148,14,32,0.72) 58px, rgba(26,100,237,0.38) 60px, transparent 64px),
+          radial-gradient(circle, rgba(148,14,32,0.18), transparent 66%);
+        mask-image: conic-gradient(from 20deg, transparent 0 24deg, #000 25deg 124deg, transparent 125deg 150deg, #000 151deg 252deg, transparent 253deg 360deg);
+        animation: magicSpin 18s linear infinite;
+        filter: drop-shadow(0 0 22px rgba(148,14,32,0.24));
+      }
+      .siteMagicBackground::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 50% 48%, transparent 0 28%, rgba(5,7,11,0.72) 67%, #05070b 100%),
+          linear-gradient(180deg, rgba(5,7,11,0.18), rgba(5,7,11,0.74));
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(3, 3, 5, 0.08), #05070b 99%),
+          linear-gradient(90deg, rgba(0,0,0,0.52), rgba(20,0,2,0.14) 44%, rgba(6,0,1,0.88)),
+          #030305;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background:
+          radial-gradient(circle at 13% 48%, rgba(210, 0, 18, 0.32), transparent 25rem),
+          linear-gradient(95deg, transparent 24%, rgba(255, 0, 18, 0.12) 44%, transparent 58%),
+          repeating-linear-gradient(90deg, rgba(255,255,255,0.026) 0 1px, transparent 1px 118px);
+        animation: drift 13s linear infinite alternate;
+      }
+      .heroGeometry { position: absolute; inset: 0; overflow: hidden; opacity: 0.96; }
+      .geoCircle { position: absolute; left: 3.8vw; top: 10vh; width: min(34vw, 620px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 42% 50%, #c90015 0 58%, #750009 100%); box-shadow: 0 0 90px rgba(210,0,18,0.16); }
+      .geoSlab { position: absolute; display: block; box-shadow: -18px 0 32px rgba(0,0,0,0.46), inset 10px 0 28px rgba(255,255,255,0.04); }
+      .geoSlab.teal { left: 24.4vw; top: 0; width: 13.1vw; height: 77vh; background: linear-gradient(180deg, #184f55, #144248); }
+      .geoSlab.black { left: 17.5vw; top: 0; width: 7vw; height: 100vh; background: #010102; box-shadow: 18px 0 0 #030305, 26px 0 30px rgba(0,0,0,0.72); }
+      .geoSlab.redOne { left: 37.8vw; top: 0; width: 31.2vw; height: 53vh; background: linear-gradient(90deg, #a90012, #d00018 38%, #8a000b); }
+      .geoSlab.redTwo { left: 39.5vw; top: 53vh; width: 18.5vw; height: 47vh; background: linear-gradient(90deg, #bb0013, #7d0008); border-top: 10px solid rgba(0,0,0,0.58); }
+      .geoSlab.redThree { right: 0; top: 0; width: 31vw; height: 100vh; background: linear-gradient(90deg, #610006, #240003 72%); box-shadow: inset 22px 0 44px rgba(0,0,0,0.42); }
+      .nav, .heroInner, .heroStats, .section, .contactInner {
+        position: relative;
+        width: min(1700px, calc(100% - 72px));
+        margin: 0 auto;
+      }
+      .nav {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        height: 84px;
+        padding-top: 16px;
+      }
+      .nav.isFloating { position: fixed; top: 0; }
+      .navGlass {
+        width: 100%;
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        padding: 0 18px 0 24px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: linear-gradient(180deg, rgba(12,14,18,0.7), rgba(8,9,12,0.42));
+        box-shadow: 0 18px 56px rgba(0,0,0,0.28);
+        backdrop-filter: blur(22px) saturate(130%);
+        -webkit-backdrop-filter: blur(22px) saturate(130%);
+        color: rgba(238, 246, 255, 0.82);
+      }
+      .brand { font-size: 14px; font-weight: 700; }
+      .navLinks { display: flex; gap: 34px; font-size: 14px; }
+      .navCta, .primaryBtn, .ghostBtn, .contactLinks a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 22px;
+        border: 1px solid rgba(205, 233, 255, 0.28);
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(18px);
+      }
+      .navCta, .primaryBtn { background: rgba(204, 0, 20, 0.2); border-color: rgba(255,96,105,0.34); }
+      .heroInner {
+        min-height: calc(100vh - 180px);
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        align-items: center;
+        justify-content: center;
+        padding: 70px 0 130px;
+      }
+      .heroCopy { grid-column: 2; max-width: 860px; justify-self: end; padding-top: 7vh; }
+      .eyebrow {
+        margin: 0 0 18px;
+        color: #ff4a55;
+        font-size: 13px;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 {
+        margin-bottom: 22px;
+        font-size: clamp(96px, 10vw, 188px);
+        line-height: 0.82;
+        font-weight: 800;
+        text-shadow: 0 22px 52px rgba(0,0,0,0.48);
+      }
+      .heroTitle { display: flex; gap: 0.03em; overflow: visible; }
+      .titleMask { display: inline-block; overflow: hidden; padding-bottom: 0.08em; }
+      .titleChar { display: inline-block; will-change: transform, opacity; }
+      .heroLead {
+        max-width: 760px;
+        color: rgba(238, 246, 255, 0.74);
+        font-size: clamp(19px, 1.55vw, 28px);
+        line-height: 1.55;
+      }
+      .heroActions, .contactLinks { display: flex; flex-wrap: wrap; gap: 16px; }
+      .heroStats {
+        position: absolute;
+        left: 50%;
+        bottom: 34px;
+        transform: translateX(-50%);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid rgba(255,255,255,0.16);
+        padding-left: min(48vw, 800px);
+      }
+      .heroSideLabel { position: absolute; left: max(36px, calc((100vw - 1700px) / 2)); bottom: 34px; margin: 0; color: rgba(238,246,255,0.44); font-size: 12px; font-weight: 700; writing-mode: vertical-rl; letter-spacing: 0.18em; }
+      .heroStats span { padding-top: 22px; color: rgba(238,246,255,0.62); font-size: 14px; }
+      .heroStats strong { display: block; color: #fff; font-size: 34px; line-height: 1.1; }
+      .section { padding: 120px 0; }
+      .sectionHead { max-width: 980px; margin-bottom: 48px; }
+      .sectionHead h2, .contact h2 {
+        margin: 0;
+        font-size: clamp(42px, 5vw, 88px);
+        line-height: 1.05;
+      }
+      .sectionHead.split {
+        max-width: none;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: end;
+        gap: 80px;
+      }
+      .sectionHead.split p:last-child {
+        color: rgba(238,246,255,0.62);
+        font-size: 18px;
+        line-height: 1.8;
+      }
+      .profileGrid {
+        display: grid;
+        grid-template-columns: minmax(320px, 0.62fr) minmax(420px, 1fr) minmax(300px, 0.55fr);
+        gap: 28px;
+      }
+      .profileElectric {
+        position: relative;
+        border-radius: 18px;
+        padding: 26px;
+        background:
+          radial-gradient(circle at 22% 12%, rgba(96,15,38,0.32), transparent 28rem),
+          linear-gradient(135deg, rgba(12,14,18,0.92), rgba(5,7,11,0.82));
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.035);
+        isolation: isolate;
+      }
+      .profileElectric::before,
+      .profileElectric::after {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: inherit;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, transparent 0 14%, #600f26 20%, transparent 29% 45%, rgba(255,69,96,0.9) 52%, transparent 62% 100%),
+          linear-gradient(180deg, transparent 0 18%, rgba(255,69,96,0.78) 26%, transparent 36% 70%, #600f26 78%, transparent 88%);
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        -webkit-mask-composite: xor;
+        padding: 2px;
+        animation: electricShift 3.8s linear infinite;
+        filter: drop-shadow(0 0 8px rgba(255,69,96,0.45));
+      }
+      .profileElectric::after {
+        inset: -10px;
+        opacity: 0.28;
+        filter: blur(18px);
+        animation-duration: 5.2s;
+      }
+      .portraitCard, .dataPanel, .strengthCard {
+        border: 1px solid rgba(255,255,255,0.13);
+        background: rgba(255,255,255,0.055);
+        backdrop-filter: blur(18px);
+      }
+      .portraitCard { margin: 0; min-height: 620px; overflow: hidden; }
+      .portraitCard img { width: 100%; height: calc(100% - 58px); object-fit: cover; object-position: center; }
+      .portraitCard figcaption {
+        height: 58px;
+        display: flex;
+        align-items: center;
+        padding: 0 22px;
+        color: rgba(238,246,255,0.66);
+        font-size: 14px;
+      }
+      .profileText { padding: 24px 8px; }
+      .profileText p { color: rgba(238,246,255,0.76); font-size: 20px; line-height: 1.9; }
+      .infoGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+      .infoGrid span, .infoGrid a, .tagRow em {
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.04);
+        padding: 14px 16px;
+        color: rgba(238,246,255,0.7);
+        font-style: normal;
+      }
+      .dataPanel { display: grid; }
+      .dataPanel div { min-height: 142px; padding: 28px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .dataPanel div:last-child { border-bottom: 0; }
+      .dataPanel strong { display: block; margin-bottom: 12px; font-size: 22px; }
+      .dataPanel span { color: rgba(238,246,255,0.58); line-height: 1.6; }
+      .projectGrid { display: grid; gap: 0; }
+      .projectCard {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(460px, 0.72fr);
+        align-items: stretch;
+        border-top: 1px solid rgba(255,255,255,0.13);
+        background: #101620;
+      }
+      .projectCard.reverse { grid-template-columns: minmax(460px, 0.72fr) minmax(0, 1.05fr); }
+      .projectCard img { width: 100%; height: 100%; min-height: 100vh; object-fit: cover; opacity: 0.84; }
+      .projectCard.reverse img { grid-column: 2; }
+      .projectGallery { min-height: 100vh; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 18px; background: #08090c; }
+      .projectGallery img { width: 100%; height: 100%; min-height: 0; object-fit: cover; opacity: 0.9; border: 1px solid rgba(255,255,255,0.12); }
+      .projectCard.reverse .projectGallery { grid-column: 2; }
+      .projectOverlay {
+        --panel-shift: 0%;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 96px 54px;
+        background:
+          radial-gradient(circle at 16% 18%, rgba(200,0,20,0.16), transparent 24rem),
+          linear-gradient(180deg, rgba(12,14,18,0.96), rgba(5,7,11,0.98));
+        transform: translateY(var(--panel-shift));
+      }
+      .projectCard.reverse .projectOverlay { grid-column: 1; grid-row: 1; }
+      .projectOverlay strong { margin-bottom: 96px; color: rgba(255,255,255,0.18); font-size: clamp(74px, 7vw, 132px); line-height: 0.8; font-weight: 800; }
+      .projectOverlay p { color: #ff4a55; font-size: 14px; }
+      .projectOverlay h3 { margin-bottom: 14px; font-size: clamp(46px, 4.8vw, 88px); line-height: 1.16; }
+      .projectOverlay span { display: block; max-width: 760px; color: rgba(238,246,255,0.72); font-size: 18px; line-height: 1.85; }
+      .tagRow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+      .tagRow em { padding: 9px 12px; font-size: 13px; }
+      .strengthGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+      .strengthCard { min-height: 320px; padding: 28px; }
+      .strengthCard span { color: #7bdfff; font-size: 14px; font-weight: 700; }
+      .strengthCard h3 { margin: 80px 0 18px; font-size: 28px; }
+      .strengthCard p { color: rgba(238,246,255,0.64); line-height: 1.8; }
+      .contact {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background:
+          linear-gradient(180deg, #05070b, rgba(5,7,11,0.66)),
+          url("public/assets/hero-poster.jpg") center / cover no-repeat;
+      }
+      .contact h2 { max-width: 1150px; margin-bottom: 42px; }
+      .contactLinks a { min-height: 56px; padding: 0 24px; }
+      @keyframes drift {
+        from { transform: translate3d(-4%, -2%, 0) rotate(0deg); }
+        to { transform: translate3d(5%, 3%, 0) rotate(6deg); }
+      }
+      @keyframes magicSpin {
+        from { transform: translate(-50%, -50%) rotate(-18deg) scale(1); }
+        50% { transform: translate(-50%, -50%) rotate(162deg) scale(1.06); }
+        to { transform: translate(-50%, -50%) rotate(342deg) scale(1); }
+      }
+      @keyframes electricShift {
+        from { background-position: 0 0, 0 0; opacity: 0.78; }
+        50% { opacity: 1; }
+        to { background-position: 220px 0, 0 180px; opacity: 0.78; }
+      }
+      @media (max-width: 1100px) {
+        .navLinks { display: none; }
+        .profileGrid, .sectionHead.split, .projectGrid, .strengthGrid, .heroInner, .projectCard, .projectCard.reverse { grid-template-columns: 1fr; }
+        .heroCopy { grid-column: 1; justify-self: start; padding-top: 0; }
+        .geoSlab.teal, .geoSlab.redTwo { display: none; }
+        .geoCircle { width: 62vw; left: -18vw; top: 19vh; }
+        .geoSlab.black { left: 18vw; width: 14vw; }
+        .geoSlab.redOne { left: 34vw; width: 42vw; height: 48vh; }
+        .geoSlab.redThree { width: 38vw; }
+        .heroStats { padding-left: 0; }
+        .projectCard, .projectCard img { min-height: auto; }
+        .projectCard img, .projectGallery, .projectCard.reverse img { grid-column: 1; min-height: 58vh; }
+        .projectCard.reverse .projectGallery { grid-column: 1; }
+        .projectGallery { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 12px; gap: 10px; }
+        .projectOverlay, .projectCard.reverse .projectOverlay { grid-column: 1; grid-row: auto; min-height: auto; padding: 72px 28px; }
+        .projectOverlay strong { margin-bottom: 54px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+        .openingCurtain { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="openingCurtain" aria-hidden="true"></div>
+    <div class="siteMagicBackground" aria-hidden="true"></div>
+    <main>
+      <section class="hero" id="top">
+        <div class="heroGeometry" aria-hidden="true">
+          <span class="geoCircle"></span>
+          <span class="geoSlab teal"></span>
+          <span class="geoSlab black"></span>
+          <span class="geoSlab redOne"></span>
+          <span class="geoSlab redTwo"></span>
+          <span class="geoSlab redThree"></span>
+        </div>
+        <nav class="nav" id="siteNav">
+          <div class="navGlass">
+            <a href="#top" class="brand">SYH.PORTFOLIO</a>
+            <div class="navLinks">
+              <a href="#profile">经历</a><a href="#projects">项目</a><a href="#strengths">优势</a><a href="#contact">联系</a>
+            </div>
+            <a class="navCta" href="mailto:2579010691@qq.com">联系我</a>
+          </div>
+        </nav>
+        <div class="heroInner">
+          <div class="heroCopy">
+            <p class="eyebrow">Shanghai Jian Qiao University · Art & Technology</p>
+            <h1 class="heroTitle" aria-label="沈奕涵"><span class="titleMask"><span class="titleChar">沈</span></span><span class="titleMask"><span class="titleChar">奕</span></span><span class="titleMask"><span class="titleChar">涵</span></span></h1>
+            <p class="heroLead">23级艺术与科技学生，正在寻找视觉设计、交互设计、UI设计、新媒体设计与文创产品设计方向实习。</p>
+            <div class="heroActions">
+              <a href="#projects" class="primaryBtn">查看作品</a>
+              <a href="tel:17321265608" class="ghostBtn">173 2126 5608</a>
+            </div>
+          </div>
+          <p class="heroSideLabel">PORTFOLIO · 2026</p>
+        </div>
+        <div class="heroStats">
+          <span><strong>04</strong>精选作品</span><span><strong>06+</strong>设计技能</span><span><strong>2023</strong>入学年级</span>
+        </div>
+      </section>
+      <section class="section profile" id="profile">
+        <div class="sectionHead">
+          <p class="eyebrow">Profile</p>
+          <h2>把文化元素转译成清晰、克制、有记忆点的视觉方案。</h2>
+        </div>
+        <div class="profileElectric">
+          <div class="profileGrid">
+            <figure class="portraitCard">
+              <img src="public/assets/avatar.jpg" alt="沈奕涵头像" />
+              <figcaption>Art & Technology / Visual Design Intern</figcaption>
+            </figure>
+            <div class="profileText">
+              <p>我是上海建桥学院 2023 级艺术与科技专业学生。关注视觉设计、UI 与交互、数字媒体和文创产品方向，能够完成从创意构思、草图表达到视觉呈现的基础设计流程。</p>
+              <p>目前作品涵盖城市文化邮票视觉、沪剧主题 IP、智慧康养产品概念、文旅文创礼盒与手绘训练。希望进入真实项目环境，继续提升版式、视觉系统、用户体验和项目落地能力。</p>
+              <div class="infoGrid">
+                <span>上海市松江区</span><a href="mailto:2579010691@qq.com">2579010691@qq.com</a><a href="tel:17321265608">173 2126 5608</a><span>求职城市：上海</span>
+              </div>
+            </div>
+            <div class="dataPanel">
+              <div><strong>Photoshop</strong><span>视觉修图与合成</span></div>
+              <div><strong>Illustrator</strong><span>矢量图形与版式</span></div>
+              <div><strong>Figma</strong><span>UI 原型与界面设计</span></div>
+              <div><strong>Blender / Rhino</strong><span>三维建模基础</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section projects" id="projects">
+        <div class="sectionHead split">
+          <div><p class="eyebrow">Selected Works</p><h2>精选项目</h2></div>
+          <p>以大图展示作品气质，后续可继续补充项目详情页、过程图、动效与完整作品集 PDF。</p>
+        </div>
+        <div class="projectGrid">
+          <article class="projectCard"><img src="public/assets/huangpu-stamps.jpg" alt="美丽黄浦邮票设计" /><div class="projectOverlay"><strong>01</strong><p>视觉设计 / 城市文化 / 2025.06</p><h3>美丽黄浦邮票设计</h3><span>围绕上海黄浦区城市文化形象，提取海关大楼、豫园、玉兰花等元素，完成系列邮票主视觉、配色系统与组合展示。</span><div class="tagRow"><em>城市视觉</em><em>插画构图</em><em>版式延展</em></div></div></article>
+          <article class="projectCard reverse"><img src="public/assets/memory-care.png" alt="高智长者智慧康养伴侣" /><div class="projectOverlay"><strong>02</strong><p>文创产品 / 康养设计 / 2026.04-06</p><h3>高智长者智慧康养伴侣</h3><span>面向老年群体的智能健康陪伴设备概念，围绕活动记录、健康监测与高光时刻整理构建产品形态和展示场景。</span><div class="tagRow"><em>用户调研</em><em>产品概念</em><em>展示海报</em></div></div></article>
+          <article class="projectCard"><img src="public/assets/ejina-gift.jpg" alt="额济纳拼图文创礼盒" /><div class="projectOverlay"><strong>03</strong><p>文旅文创 / 礼盒设计</p><h3>额济纳拼图文创礼盒</h3><span>以地域文化和旅行记忆为核心，探索拼图、包装与礼盒系统的组合表达，形成具备纪念属性的文创方案。</span><div class="tagRow"><em>文旅叙事</em><em>包装系统</em><em>产品展示</em></div></div></article>
+          <article class="projectCard reverse"><div class="projectGallery" aria-label="手绘与概念草图作品图"><img src="public/assets/sketch-study.jpg" alt="手绘与概念草图 1" /><img src="public/assets/sketch-patterns.jpg" alt="手绘与概念草图 2" /><img src="public/assets/sketch-architecture.jpg" alt="手绘与概念草图 3" /><img src="public/assets/sketch-structure.jpg" alt="手绘与概念草图 4" /></div><div class="projectOverlay"><strong>04</strong><p>手绘表达 / 造型训练</p><h3>手绘与概念草图</h3><span>通过手绘草图和概念图训练观察、结构、造型与视觉表达能力，为后续 UI、IP、产品概念提供前期表达基础。</span><div class="tagRow"><em>草图表达</em><em>造型基础</em><em>概念推演</em></div></div></article>
+        </div>
+      </section>
+      <section class="section strengths" id="strengths">
+        <div class="sectionHead"><p class="eyebrow">Advantages</p><h2>个人优势</h2></div>
+        <div class="strengthGrid">
+          <article class="strengthCard"><span>01</span><h3>视觉整合</h3><p>能将城市文化、传统元素与现代视觉语言结合，形成统一的画面系统。</p></article>
+          <article class="strengthCard"><span>02</span><h3>交互意识</h3><p>学习 UI 与交互设计，关注信息层级、使用路径和界面体验的基础逻辑。</p></article>
+          <article class="strengthCard"><span>03</span><h3>产品表达</h3><p>具备从用户需求、概念草图到展示海报的基础产品设计表达能力。</p></article>
+          <article class="strengthCard"><span>04</span><h3>工具适应</h3><p>熟悉 Photoshop、Illustrator、Figma，并能结合 Blender、Rhino 与 AI 工具辅助创作。</p></article>
+        </div>
+      </section>
+      <section class="contact" id="contact">
+        <div class="contactInner">
+          <p class="eyebrow">Contact</p>
+          <h2>期待参与真实项目，把想法推进到可被看见的作品。</h2>
+          <div class="contactLinks"><a href="mailto:2579010691@qq.com">2579010691@qq.com</a><a href="tel:17321265608">173 2126 5608</a></div>
+        </div>
+      </section>
+    </main>
+    <script src="node_modules/gsap/dist/gsap.min.js"></script>
+    <script src="node_modules/gsap/dist/ScrollTrigger.min.js"></script>
+    <script>
+      const siteNav = document.getElementById('siteNav');
+      const updateNav = () => {
+        siteNav.classList.toggle('isFloating', window.scrollY > window.innerHeight - 120);
+      };
+      updateNav();
+      window.addEventListener('scroll', updateNav, { passive: true });
+      window.addEventListener('resize', updateNav);
+
+      if (window.gsap && window.ScrollTrigger && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.registerPlugin(ScrollTrigger);
+        const ease = 'expo.out';
+
+        gsap.set('.nav', { y: -34, opacity: 0 });
+        gsap.set('.openingCurtain', { scaleY: 1, transformOrigin: 'top' });
+        gsap.set('.heroTitle .titleChar', { yPercent: 116, scaleY: 0.48, opacity: 0, transformOrigin: '50% 100%' });
+        gsap.set('.hero .eyebrow, .heroLead, .heroActions, .heroStats span', { y: 42, opacity: 0 });
+        gsap.set('.heroGeometry span', { scaleX: 0.42, opacity: 0, transformOrigin: 'left center' });
+
+        gsap.timeline({ defaults: { ease } })
+          .to('.openingCurtain', { scaleY: 0, duration: 1.25, ease: 'power4.inOut' })
+          .to('.heroGeometry span', { scaleX: 1, opacity: 1, duration: 1.35, stagger: 0.08 }, '-=0.9')
+          .to('.heroTitle .titleChar', { yPercent: 0, scaleY: 1, opacity: 1, duration: 1.18, stagger: 0.11 }, '-=0.72')
+          .to('.hero .eyebrow, .heroLead, .heroActions, .heroStats span', { y: 0, opacity: 1, duration: 1.05, stagger: 0.1 }, '-=0.72')
+          .to('.nav', { y: 0, opacity: 1, duration: 0.95 }, '-=0.75');
+
+        gsap.utils.toArray('.section, .contact').forEach((section) => {
+          const eyebrow = section.querySelector('.eyebrow');
+          const heading = section.querySelector('h2');
+          const cards = section.querySelectorAll('.portraitCard, .profileText, .dataPanel, .projectOverlay, .strengthCard, .contactLinks a');
+          const images = section.querySelectorAll('.portraitCard img, .projectCard > img, .projectGallery img');
+
+          if (eyebrow) {
+            gsap.from(eyebrow, {
+              scrollTrigger: { trigger: section, start: 'top 72%' },
+              y: 112,
+              scale: 1.28,
+              opacity: 0,
+              duration: 1.25,
+              ease,
+            });
+          }
+
+          if (heading) {
+            gsap.from(heading, {
+              scrollTrigger: { trigger: section, start: 'top 68%' },
+              y: 88,
+              letterSpacing: '0.08em',
+              opacity: 0,
+              duration: 1.35,
+              ease,
+            });
+          }
+
+          if (cards.length) {
+            gsap.from(cards, {
+              scrollTrigger: { trigger: section, start: 'top 60%' },
+              y: 76,
+              opacity: 0,
+              duration: 1.18,
+              stagger: 0.13,
+              ease,
+            });
+          }
+
+          images.forEach((image) => {
+            gsap.fromTo(image, { clipPath: 'inset(0 100% 0 0)', scale: 1.08 }, {
+              scrollTrigger: { trigger: image, start: 'top 78%' },
+              clipPath: 'inset(0 0% 0 0)',
+              scale: 1,
+              duration: 1.45,
+              ease: 'power4.out',
+            });
+
+            gsap.to(image, {
+              scrollTrigger: { trigger: image, start: 'top bottom', end: 'bottom top', scrub: 1.1 },
+              yPercent: -4,
+              ease: 'none',
+            });
+          });
+        });
+
+        gsap.utils.toArray('.projectCard').forEach((project) => {
+          const overlay = project.querySelector('.projectOverlay');
+          const number = project.querySelector('.projectOverlay strong');
+
+          if (number) {
+            gsap.from(number, {
+              scrollTrigger: { trigger: project, start: 'top 68%' },
+              x: project.classList.contains('reverse') ? -120 : 120,
+              opacity: 0,
+              duration: 1.35,
+              ease,
+            });
+          }
+
+          if (overlay) {
+            gsap.from(overlay, {
+              scrollTrigger: { trigger: project, start: 'top 68%' },
+              '--panel-shift': '18%',
+              duration: 1.5,
+              ease,
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
